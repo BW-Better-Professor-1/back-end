@@ -1,3 +1,4 @@
+
 exports.up = function(knex) {
     return knex.schema.createTable("users", tbl => {
         tbl.increments()
@@ -12,7 +13,6 @@ exports.up = function(knex) {
           tbl.increments()
           tbl.integer("professor_id")
               .unsigned()
-              .notNullable()
               .references("users.id")
               .onUpdate("CASCADE")
               .onDelete("CASCADE")
@@ -26,8 +26,12 @@ exports.up = function(knex) {
           tbl.increments()
           tbl.integer("student_id")
               .unsigned()
-              .notNullable()
               .references("students.id")
+              .onUpdate("CASCADE")
+              .onDelete("CASCADE")
+          tbl.integer("professor_id")
+              .unsigned()
+              .references("users.id")
               .onUpdate("CASCADE")
               .onDelete("CASCADE")
           tbl.string("project_name", 225)
@@ -42,13 +46,11 @@ exports.up = function(knex) {
           tbl.increments()
           tbl.integer("professor_id")
               .unsigned()
-              .notNullable()
               .references("users.id")
               .onUpdate("CASCADE")
               .onDelete("CASCADE")
           tbl.integer("student_id")
               .unsigned()
-              .notNullable()
               .references("students.id")
               .onUpdate("CASCADE")
               .onDelete("CASCADE")
@@ -57,16 +59,14 @@ exports.up = function(knex) {
           tbl.text("body", 1000)
               .notNullable()
           tbl.datetime("send_time")
-              .notNullable()
           tbl.boolean("sent")
       })
   };
   
   exports.down = function(knex) {
     return knex.schema
-      .dropTableIfExists("students")  
       .dropTableIfExists("users")
+      .dropTableIfExists("students")  
       .dropTableIfExists("projects")
       .dropTableIfExists("messages")
   };
-  

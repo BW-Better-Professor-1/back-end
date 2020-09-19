@@ -14,11 +14,20 @@ router.get("/", (req, res) => {
 })
 
 router.post("/register", (req, res) => {
-    //TODO: This route will register a new student
-    // a new student needs: professor_id, name, password
-    // const { professor_id, name, password } = req.body; 
-    //? Should I update the database and allow the professor_id to be null? It could be assigned/reassigned later this way, and allow students to make a profile without an immediate need for an instructor? 
-    // if valid, the new student will be added to the database, return token and welcome message.
+    const new_student = req.body; 
+
+    if (isValid(new_student)) {
+        const rounds = process.env.BCRYPT_ROUNDS || 8; 
+        const hash = bcrypt.hashSync(new_student.password, rounds);
+        new_student.password = hash; 
+
+        db.add(new_student)
+            .then(student => {
+                const { name } = student; 
+                res.status(201).json(name)
+            })
+            .catch(error => res.send(error))
+    }
 })
 
 //* 🎠Projects need student IDs, this route will allow students to add projects directly 🎠 *// 
