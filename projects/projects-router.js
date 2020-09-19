@@ -28,20 +28,10 @@ router.get("/:id", (req, res) => {
         })
 }); 
 
+router.put("/:id", (req, res) => {
+    
+})
 
-//TODO - This route makes more sense to be routed through the students router, so that the student id can be grabbed from req.params // 
-
-// router.post("/", (req, res) => {
-//     const new_project = req.body; 
-
-//     db.add(new_project)
-//         .then(project => {
-//             res.status(201).json(project); 
-//         })
-//         .catch(error => {
-//             res.status(500).json({ message: "Unable to add new project" }); 
-//         })
-// })
 
 
 module.exports = router;
