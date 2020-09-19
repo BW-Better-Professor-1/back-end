@@ -3,6 +3,7 @@ const db = require('../data/db-config.js');
 module.exports = {
     find, 
     findById, 
+    add,
     addProject
 }
 
@@ -14,6 +15,14 @@ function findById(id) {
     return db('students')
         .where({ id })
         .first(); 
+}
+
+function add(student) {
+    return db('students')
+        .insert(student, 'id')
+            .then(([id]) => {
+                return findById(id); 
+            })
 }
 
 function addProject(project, student_id) {
