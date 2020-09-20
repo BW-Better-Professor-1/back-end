@@ -3,7 +3,8 @@ const db = require("../data/db-config");
 module.exports = {
     find, 
     findById, 
-    add
+    add, 
+    update
 }
 
 function find() {
@@ -22,4 +23,13 @@ function add(project) {
             .then(([id]) => {
                 return findById(id)
             })
+}
+
+function update(changes, id) {
+    return db('projects')
+        .where({ id })
+        .update(changes)
+        .then(() => {
+            return findById(id)
+        }); 
 }

@@ -72,6 +72,22 @@ router.post("/login", (req, res) => {
       }
   });
 
+router.get("/:id/projects", (req, res) => {
+    const { id } = req.params; 
+
+    db.findProjects(id)
+        .then(projects => {
+            if (projects.length) {
+                res.status(200).json(projects);
+            } else {
+                res.status(404).json({ message: "No projects are available for this student" });
+            }
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
 router.post("/:id/add-project", (req, res) => {
     const new_project = req.body; 
     const { id } = req.params; 

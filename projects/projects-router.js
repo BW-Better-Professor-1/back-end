@@ -26,10 +26,27 @@ router.get("/:id", (req, res) => {
         .catch(error => {
             res.status(500).json({ message: "Error finding projects" }); 
         })
-}); 
+});
 
+
+
+//* 🎠UPDATE project by ID🎠 *// 
 router.put("/:id", (req, res) => {
-    
+    const { id } = req.params; 
+    const changes = req.body; 
+
+    db.update(changes, id)
+        .then(updatedProject => {
+            res.status(201).json(updatedProject); 
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Unable to update project, please try again" });
+        })
+        
+})
+
+router.delete("/:id", (req, res) => {
+
 })
 
 
