@@ -5,6 +5,7 @@ const { isValid, signToken } = require("../auth/auth-services");
 
 const db = require("./students-model"); 
 
+//* 🎠READ🎠 *// 
 router.get("/", (req, res) => {
     db.find()
         .then(students => { 
@@ -13,6 +14,7 @@ router.get("/", (req, res) => {
         .catch(error => res.send(error)); 
 })
 
+//* 🎠READ🎠 *// 
 router.get("/:id", (req, res) => {
     const { id } = req.params; 
 
@@ -26,6 +28,7 @@ router.get("/:id", (req, res) => {
         })
 })
 
+//* 🎠CREATE🎠 *// 
 router.post("/register", (req, res) => {
     const new_student = req.body; 
 
@@ -38,7 +41,7 @@ router.post("/register", (req, res) => {
             .then(student => {
                 const token = signToken(student); 
                 const { name } = student; 
-                res.status(200).json({ message: `Welcome ${name}`, token})
+                res.status(200).json({ message: `Welcome ${name}`, token});
             })
             .catch(err => {
                 res.status(500).json(err.message);
@@ -63,7 +66,6 @@ router.post("/login", (req, res) => {
           })
           .catch(err => {
               res.status(500).json({ message: err.message });
-              console.log(err)
           });
       } else {
           res.status(400).json({
@@ -72,6 +74,8 @@ router.post("/login", (req, res) => {
       }
   });
 
+
+//* 🎠READ🎠 *// 
 router.get("/:id/projects", (req, res) => {
     const { id } = req.params; 
 
@@ -88,6 +92,7 @@ router.get("/:id/projects", (req, res) => {
         });
 });
 
+//* 🎠CREATE🎠 *// 
 router.post("/:id/add-project", (req, res) => {
     const new_project = req.body; 
     const { id } = req.params; 

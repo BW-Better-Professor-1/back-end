@@ -37,7 +37,7 @@ function add(student) {
 function findProjects(id) {
     return db('students')
         .join('projects', 'students.id', 'projects.student_id' )
-        .select('students.name', 'projects.project_name', 'projects.description', 'projects.due_date', 'projects.description', 'projects.completed')
+        .select('students.name', 'projects.professor_id', 'projects.project_name', 'projects.description', 'projects.due_date', 'projects.description', 'projects.completed')
         .where({ student_id: id })
 }
 

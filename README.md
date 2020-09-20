@@ -61,7 +61,7 @@ id | professor_id | name | password
 
 * POST to: *"/api/students/:id/add-project"* 
 
-This end points allows a student to post a new project
+This end points allows a student to post a new project (uses parameters to link the student id to the project)
 
     * Expects: a new project object:
     
@@ -87,4 +87,9 @@ id | student_id | project_name | description | due_date | completed
 * GET to: *"api/projects/:id"*
     * Returns: The project with the provided id number 
 
+* PUT to: *"api/projects/:id"*
+    * Expects: A project object - with whatever changes are occuring
+    * Returns: The updated project object
 
+* DELETE to: *"api/projects/:id"*
+    * Removes the project with the given ID, if it exists

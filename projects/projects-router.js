@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const db = require("./projects-model"); 
 
+//* 🎠READ🎠 *// 
 router.get("/", (req, res) => {
     db.find()
         .then(projects => {
@@ -13,8 +14,10 @@ router.get("/", (req, res) => {
         })
 }); 
 
+//* 🎠READ🎠 *// 
 router.get("/:id", (req, res) => {
     const { id } = req.params; 
+    
     db.findById(id)
         .then(project => {
             if (project) {
@@ -30,7 +33,7 @@ router.get("/:id", (req, res) => {
 
 
 
-//* 🎠UPDATE project by ID🎠 *// 
+//* 🎠UPDATE🎠 *// 
 router.put("/:id", (req, res) => {
     const { id } = req.params; 
     const changes = req.body; 
@@ -45,8 +48,21 @@ router.put("/:id", (req, res) => {
         
 })
 
+//* 🎠REMOVE🎠 *// 
 router.delete("/:id", (req, res) => {
+    const { id } = req.params; 
 
+    db.remove(id)
+        .then(count => {
+            if (count) {
+                res.status(200).json({ message: "Project successfully removed" }); 
+            } else {
+                res.status(404).json({ message: "No project with this ID was found" }); 
+            }
+        })
+        .catch(err => {
+            res.send(err); 
+        })
 })
 
 
