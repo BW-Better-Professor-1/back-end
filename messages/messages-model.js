@@ -34,6 +34,7 @@ function sendMessage(message, professor_id) {
                     .first(); 
             }); 
 }
+
 function getById(id) {
     return db('messages')
       .where({ id })
