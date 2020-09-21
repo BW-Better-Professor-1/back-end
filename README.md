@@ -43,8 +43,26 @@ id | professor_id | name | password
 1 | 2 | "new-student" | "password"
 
 * Name must be **unique** 
+* professor_id is not required, but should be attached for full server use
+
+* GET to: *"/api/students/"*
+    * Returns: An array of all students 
+
+* GET to: *"/api/students/:id"*
+    * Returns: The student with the given id
+
+* POST to: *"api/students/register"* 
+    * Expects: A new student object - professor_id(not required), name and password 
+    * Returns: A token 
+
+* POST to: *"api/students/login"* 
+    * Expects: A student object - name and password 
+    * Returns: A token 
 
 * POST to: *"/api/students/:id/add-project"* 
+
+This end points allows a student to post a new project (uses parameters to link the student id to the project)
+
     * Expects: a new project object:
     
     new_project = {
@@ -54,7 +72,6 @@ id | professor_id | name | password
         "completed": true
      }
 
-    * All fields above are **required**
     * Datetime format is year-month-day, in quotes
     * Returns: The newly added project 
 
@@ -70,4 +87,9 @@ id | student_id | project_name | description | due_date | completed
 * GET to: *"api/projects/:id"*
     * Returns: The project with the provided id number 
 
+* PUT to: *"api/projects/:id"*
+    * Expects: A project object - with whatever changes are occuring
+    * Returns: The updated project object
 
+* DELETE to: *"api/projects/:id"*
+    * Removes the project with the given ID, if it exists

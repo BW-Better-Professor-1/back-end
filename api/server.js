@@ -16,7 +16,7 @@ server.use(express.json());
 
 server.use('/api/auth', authRouter); 
 server.use('/api/projects', authenticate, projectsRouter); 
-server.use('/api/students', studentsRouter);
+server.use('/api/students', authenticate, studentsRouter);
 server.use('/api/messages', messagesRouter); 
 
 server.get('/', (req, res) =>{

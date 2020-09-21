@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 const db = require("./projects-model"); 
 
+//* 🎠READ🎠 *// 
 router.get("/", (req, res) => {
     db.find()
         .then(projects => {
@@ -13,8 +14,10 @@ router.get("/", (req, res) => {
         })
 }); 
 
+//* 🎠READ🎠 *// 
 router.get("/:id", (req, res) => {
     const { id } = req.params; 
+    
     db.findById(id)
         .then(project => {
             if (project) {
@@ -26,22 +29,42 @@ router.get("/:id", (req, res) => {
         .catch(error => {
             res.status(500).json({ message: "Error finding projects" }); 
         })
-}); 
+});
 
 
-//TODO - This route makes more sense to be routed through the students router, so that the student id can be grabbed from req.params // 
 
-// router.post("/", (req, res) => {
-//     const new_project = req.body; 
+//* 🎠UPDATE🎠 *// 
+router.put("/:id", (req, res) => {
+    const { id } = req.params; 
+    const changes = req.body; 
 
-//     db.add(new_project)
-//         .then(project => {
-//             res.status(201).json(project); 
-//         })
-//         .catch(error => {
-//             res.status(500).json({ message: "Unable to add new project" }); 
-//         })
-// })
+    db.update(changes, id)
+        .then(updatedProject => {
+            res.status(201).json(updatedProject); 
+        })
+        .catch(err => {
+            res.status(500).json({ message: "Unable to update project, please try again" });
+        })
+        
+})
+
+//* 🎠REMOVE🎠 *// 
+router.delete("/:id", (req, res) => {
+    const { id } = req.params; 
+
+    db.remove(id)
+        .then(count => {
+            if (count) {
+                res.status(200).json({ message: "Project successfully removed" }); 
+            } else {
+                res.status(404).json({ message: "No project with this ID was found" }); 
+            }
+        })
+        .catch(err => {
+            res.send(err); 
+        })
+})
+
 
 
 module.exports = router;
