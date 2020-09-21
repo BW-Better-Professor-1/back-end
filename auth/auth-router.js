@@ -67,6 +67,42 @@ router.post('/login', (req, res) => {
     }
 });
 
+//* 🎠🎠 CHAYCE - I added the following 2 routes -ash 🎠🎠 *// 
+
+router.post("/:id/add-project", (req, res) => {
+    const new_project = req.body; 
+    const { id } = req.params; 
+
+    Users.findById(id)
+        .then(user => {
+            if (user) {
+                Users.addProject(new_project, id)
+                    .then(project => {
+                        res.status(201).json(project); 
+                    })
+            } else {
+                res.status(404).json({ message: "Missing or Invalid user ID" }); 
+            }
+        })
+        .catch(error => res.send(error)); 
+}); 
+
+router.get("/:id/projects", (req, res) => {
+    const { id } = req.params; 
+
+    Users.findProjects(id)
+        .then(projects => {
+            if (projects.length) {
+                res.status(200).json(projects);
+            } else {
+                res.status(404).json({ message: "No projects are available for this student" });
+            }
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
 
 // NOTE: JwT does not have a destroy method - there is a way around this but there will be some reworking here - its a nice to have if we want to end up implmenting it. Or we can implement ssessions and tokens. 
 // router.post('/logout', (req, res) => {

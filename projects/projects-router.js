@@ -1,3 +1,6 @@
+//TODO: Joining table of user, student, professor id to have more than one student on a project... 
+
+
 const router = require('express').Router();
 
 const db = require("./projects-model"); 
@@ -31,8 +34,6 @@ router.get("/:id", (req, res) => {
         })
 });
 
-
-
 //* 🎠UPDATE🎠 *// 
 router.put("/:id", (req, res) => {
     const { id } = req.params; 
@@ -46,7 +47,7 @@ router.put("/:id", (req, res) => {
             res.status(500).json({ message: "Unable to update project, please try again" });
         })
         
-})
+});
 
 //* 🎠REMOVE🎠 *// 
 router.delete("/:id", (req, res) => {
@@ -63,7 +64,7 @@ router.delete("/:id", (req, res) => {
         .catch(err => {
             res.send(err); 
         })
-})
+}); 
 
 
 

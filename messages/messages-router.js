@@ -28,21 +28,19 @@ router.get("/:id", (req, res) => {
         })
 }); 
 
-
-// **ASHLEY - This is where I'm stuck - this is the endpoint to insert a message into messaging database. Trying to grab the id from the url and put that as the professor_id but either my code has only been able to make that a message id which broke things or else I changed my code and now its just returning a blank response but still adds it to the general GET / endpoint with professor_id as null.
 router.post("/:id", (req, res) => {
-    const new_message = req.body; 
+    const newMessage = req.body; 
     const { id } = req.params; 
-
-    db.findMsgByUser({id})
+    
+    db.getById(id)
         .then(message => {
             if (message) {
-                db.sendMessage(new_message, id)
+                db.sendMessage(newMessage, id)
                     .then(message => {
-                        res.status(201).json(message); 
+                        res.status(201).json(message);
                     })
             } else {
-                res.status(404).json({ message: "Missing or Invalid user ID" }); 
+                res.status(404).json({ message: `Missing or Invalid user ID ${newMessage}` }); 
             }
         })
         .catch(error => res.send(error)); 

@@ -5,7 +5,9 @@ module.exports = {
     find,
     findBy,
     findById,
-    add
+    add, 
+    addProject, 
+    findProjects
 };
 
 // Returns list of all users
@@ -38,3 +40,25 @@ async function add(user) {
         throw error;
     }
 };
+
+// add a project through the professor 
+function addProject(project, professor_id) {
+    project.professor_id = professor_id; 
+
+    return db('projects')
+        .insert(project, 'id')
+            .then(ids => {
+                const [ id ] = ids; 
+                return db('projects')  
+                    .where({ id })
+                    .first(); 
+            }); 
+}
+
+// query for the professors projects
+function findProjects(id) {
+    return db('users')
+        .join('projects', 'users.id', 'projects.professor_id' )
+        .select('projects.professor_id','projects.student_id','projects.project_name', 'projects.description', 'projects.due_date', 'projects.description', 'projects.completed')
+        .where({ professor_id: id });
+}
