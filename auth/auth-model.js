@@ -7,7 +7,8 @@ module.exports = {
     findById,
     add, 
     addProject, 
-    findProjects
+    findProjects, 
+    findStudents
 };
 
 // Returns list of all users
@@ -61,4 +62,11 @@ function findProjects(id) {
         .join('projects', 'users.id', 'projects.professor_id' )
         .select('projects.professor_id','projects.student_id','projects.project_name', 'projects.description', 'projects.due_date', 'projects.description', 'projects.completed')
         .where({ professor_id: id });
+}
+
+function findStudents(id) {
+    return db('users')
+        .join('students', 'users.id', 'students.professor_id')
+        .select('students.id','students.name')
+        .where({ professor_id: id })
 }

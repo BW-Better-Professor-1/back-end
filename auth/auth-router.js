@@ -67,7 +67,7 @@ router.post('/login', (req, res) => {
     }
 });
 
-//* 🎠🎠 CHAYCE - I added the following 2 routes -ash 🎠🎠 *// 
+//* 🎠🎠 CHAYCE - I added the following 3 routes -ash 🎠🎠 *// 
 
 router.post("/:id/add-project", (req, res) => {
     const new_project = req.body; 
@@ -95,7 +95,23 @@ router.get("/:id/projects", (req, res) => {
             if (projects.length) {
                 res.status(200).json(projects);
             } else {
-                res.status(404).json({ message: "No projects are available for this student" });
+                res.status(404).json({ message: "No projects are available for this user" });
+            }
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
+router.get("/:id/students", (req, res) => {
+    const { id } = req.params; 
+
+    Users.findStudents(id)
+        .then(students => {
+            if (students.length) {
+                res.status(200).json(students);
+            } else {
+                res.status(404).json({ message: "You are not currently mentoring any students" });
             }
         })
         .catch(err => {
