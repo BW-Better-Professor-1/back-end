@@ -84,3 +84,6 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+#Prevent DB's from merging into github causing copies and errors
+.db3

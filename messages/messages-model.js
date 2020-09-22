@@ -39,7 +39,7 @@ function sendMessage(message, professor_id) {
 function getById(id) {
     return db('messages')
       .where({ id })
-      .first();
+      .first()
   }
 
       
