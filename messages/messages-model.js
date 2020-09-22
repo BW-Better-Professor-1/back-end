@@ -19,7 +19,8 @@ function findMsgByUser(id) {
     return db('users as u')
         .where('u.id', '=', id)
         .join('messages AS m', 'u.id', '=', 'm.professor_id' )
-        .select('m.title', 'u.id as user_id', 'm.professor_id', 'm.body', 'u.name as user', 'm.student_id', 'm.send_time', 'm.sent')
+        .join('students AS s', 's.id', '=', 'm.student_id')
+        .select('m.title', 'u.id as user_id', 'm.professor_id', 'm.body', 'u.name as username', 's.name as student_name', 'm.send_time', 'm.sent')
         .orderBy('m.professor_id')
 }
 
