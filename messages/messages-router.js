@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
 })
 
 //GET - specific message by message id
-router.get("/:id/messages", (req, res) => {
+router.get("/:id/message", (req, res) => {
     const { id } = req.params; 
     db.getById(id)
         .then(messages => {
