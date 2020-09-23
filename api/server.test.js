@@ -21,7 +21,7 @@ describe("GET /", () => {
                 expect(res.status).toBe(200);
             })
         })
-    it("should return HTTP status code 200", () => {
+    it("should return response in JSON", () => {
         return supertest(server)
             .get("/")
             .then(res => {
